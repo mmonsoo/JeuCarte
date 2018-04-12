@@ -65,6 +65,7 @@ public class FenetreJeu extends JFrame {
 		rejouer.setText("Rejouer");
 		rejouer.setBounds(510, 250, 150, 50);
 		rejouer.setActionCommand("rejoue");
+		rejouer.setVisible(false);
 		panneau.add(rejouer);
 		panneau.repaint();
 		
