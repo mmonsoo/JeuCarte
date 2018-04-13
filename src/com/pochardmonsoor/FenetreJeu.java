@@ -25,9 +25,11 @@ public class FenetreJeu extends JFrame {
 	private JButton rejouer;
 	private BufferedImage monImage;
 	private List<JButton> listeBouton = new ArrayList <JButton>();
-	
+	//Etat 0: cartefachecaché    1: BatmanPerte  2: JokerGain
+	private int [] tabCarteEtat= {0,0,0,0};
+
 	//Constructeur de classe
-	public FenetreJeu() throws IOException {
+	public FenetreJeu() {
 		this.setTitle("Le jeu de carte");
 		this.setSize(700, 500);
 		this.setLocationRelativeTo(null);
@@ -35,7 +37,7 @@ public class FenetreJeu extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		afficherFenetreJeu();
 	}
-	public void afficherFenetreJeu() throws IOException {
+	public void afficherFenetreJeu(){
 		panneau=new JPanel();
 		panneau.setLayout(null);
 		this.setContentPane(panneau);
@@ -44,23 +46,28 @@ public class FenetreJeu extends JFrame {
 		score.setText("Score : 0");
 		panneau.add(score);
 		//Création boutons
-		monImage = ImageIO.read(new File("carteFaceCachee.jpg"));
-		carte1 = new JButton(new ImageIcon(monImage.getScaledInstance(150, 150, monImage.SCALE_FAST)));
-		carte1.setBounds(0, 51, 150, 150);
-		carte1.setActionCommand("cart1");
-		panneau.add(carte1);
-		carte2 = new JButton(new ImageIcon(monImage.getScaledInstance(150, 150, monImage.SCALE_FAST)));
-		carte2.setBounds(170, 51, 150, 150);
-		carte2.setActionCommand("cart2");
-		panneau.add(carte2);
-		carte3 = new JButton(new ImageIcon(monImage.getScaledInstance(150, 150, monImage.SCALE_FAST)));
-		carte3.setBounds(340, 51, 150, 150);
-		carte3.setActionCommand("cart3");
-		panneau.add(carte3);
-		carte4 = new JButton(new ImageIcon(monImage.getScaledInstance(150, 150, monImage.SCALE_FAST)));
-		carte4.setBounds(510, 51, 150, 150);
-		carte4.setActionCommand("cart4");
-		panneau.add(carte4);
+		int intpixels=0;
+		//monImage = ImageIO.read(new File("carteFaceCachee.jpg"));
+		ImageIcon icon=new ImageIcon ("carteFaceCachee.jpg");
+		for (int i=1;i<5;i++) {
+			JButton carte= new JButton();
+			carte.setBounds(intpixels, 51, 150, 150);
+			carte.setActionCommand("Carte,"+i);
+			if(tabCarteEtat[i-1]==0) {
+				icon=new ImageIcon ("carteFaceCachee.jpg");
+			}
+			else if (tabCarteEtat[i-1]==2){
+				icon=new ImageIcon ("jokerCarte.jpg");
+
+			}
+			else if (tabCarteEtat[i-1]==1) {
+				icon=new ImageIcon ("batmanCarte.jpg");
+			}
+			carte.setIcon(icon);
+			panneau.add(carte);
+			listeBouton.add(carte);
+			intpixels+=170;	
+		}
 		rejouer=new JButton();
 		rejouer.setText("Rejouer");
 		rejouer.setBounds(510, 250, 150, 50);
@@ -68,16 +75,8 @@ public class FenetreJeu extends JFrame {
 		rejouer.setVisible(false);
 		panneau.add(rejouer);
 		panneau.repaint();
-		
-		listeBouton.add(carte1);
-		listeBouton.add(carte2);
-		listeBouton.add(carte3);
-		listeBouton.add(carte4);
 		listeBouton.add(rejouer);
-
-
 	}
-	
 	public JPanel getPanneau() {
 		return panneau;
 	}
@@ -132,6 +131,12 @@ public class FenetreJeu extends JFrame {
 	public void setListeBouton(List<JButton> listeBouton) {
 		this.listeBouton = listeBouton;
 	}
-	
+	public int[] getTabCarteEtat() {
+		return tabCarteEtat;
+	}
+	public void setTabCarteEtat(int[] tabCarteEtat) {
+		this.tabCarteEtat = tabCarteEtat;
+	}
+
 
 }
