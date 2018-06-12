@@ -22,6 +22,7 @@ public class FenetreJeu extends JFrame {
 	private JButton carte2;
 	private JButton carte3;
 	private JButton carte4;
+	
 	private JButton rejouer;
 	private BufferedImage monImage;
 	private List<JButton> listeBouton = new ArrayList <JButton>();
